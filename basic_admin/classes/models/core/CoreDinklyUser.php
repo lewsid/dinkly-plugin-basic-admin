@@ -217,9 +217,9 @@ class CoreDinklyUser extends BaseDinklyUser
 
 	public static function isMemberOf($group_abbreviation)
 	{
-		if(self::getLoggedGroups() != array())
+		if(static::getLoggedGroups() != array())
 		{
-			foreach(self::getLoggedGroups() as $group)
+			foreach(static::getLoggedGroups() as $group)
 			{
 				if($group['abbreviation'] == $group_abbreviation)
 				{
@@ -231,9 +231,9 @@ class CoreDinklyUser extends BaseDinklyUser
 
 	public static function hasPermission($permission_name)
 	{
-		if(self::getLoggedPermissions() != array())
+		if(static::getLoggedPermissions() != array())
 		{
-			foreach(self::getLoggedPermissions() as $permission)
+			foreach(static::getLoggedPermissions() as $permission)
 			{
 				if($permission['name'] == $permission_name)
 				{
@@ -284,7 +284,7 @@ class CoreDinklyUser extends BaseDinklyUser
 	 */
 	public static function isLoggedIn($app = null)
 	{
-		if(self::getAuthSessionValue('logged_in', $app)) { return true; }
+		if(static::getAuthSessionValue('logged_in', $app)) { return true; }
 		return false;
 	}
 
@@ -324,17 +324,40 @@ class CoreDinklyUser extends BaseDinklyUser
 	/**
 	 * Retrieve all objects matching array of passed property/value pairs
 	 *
-	 * @param bool $val: set true to log in admin user
+	 * @param bool $is_logged_in: set true to log in admin user
+	 * @param int $user_id: userid to set logged in
+	 * @param string $username: username of logged in user
+	 * @param array $groups: groups user has access to
+	 * @param string $app: set explicit app to authenticate against
+	 * @param boolean $auth_all_apps: log user into all apps
 	 * @param string $username: username of admin user to set sessions
 	 * 
 	 */
-	public static function setLoggedIn($is_logged_in, $user_id, $username, $groups = array(), $app = null)
+	public static function setLoggedIn($is_logged_in, $user_id, $username, $groups = array(), $app = null, $auth_all_apps = false)
 	{
 		if(!$app) $app = Dinkly::getCurrentAppName();
 
-		self::setAuthSessionValue('logged_in', $is_logged_in, $app);
-		self::setAuthSessionValue('logged_username', $username, $app);
-		self::setAuthSessionValue('logged_id', $user_id, $app);
+		$apps = Dinkly::getValidApps();
+
+		//If set, we'll set the user logged in for each app, overrides explicit app being passed
+		if($auth_all_apps)
+		{
+			if($apps != array())
+			{
+				foreach($apps as $a)
+				{
+					static::setAuthSessionValue('logged_in', $is_logged_in, $a);
+					static::setAuthSessionValue('logged_username', $username, $a);
+					static::setAuthSessionValue('logged_id', $user_id, $a);
+				}
+			}
+		}
+		else
+		{
+			static::setAuthSessionValue('logged_in', $is_logged_in, $app);
+			static::setAuthSessionValue('logged_username', $username, $app);
+			static::setAuthSessionValue('logged_id', $user_id, $app);
+		}
 
 		if($groups != array())
 		{
@@ -356,8 +379,22 @@ class CoreDinklyUser extends BaseDinklyUser
 				}
 			}
 
-			self::setAuthSessionValue('logged_groups', $logged_groups, $app);
-			self::setAuthSessionValue('logged_permissions', $logged_permissions, $app);
+			if($auth_all_apps)
+			{
+				if($apps != array())
+				{
+					foreach($apps as $a)
+					{
+						static::setAuthSessionValue('logged_groups', $logged_groups, $a);
+						static::setAuthSessionValue('logged_permissions', $logged_permissions, $a);
+					}
+				}
+			}
+			else
+			{
+				static::setAuthSessionValue('logged_groups', $logged_groups, $app);
+				static::setAuthSessionValue('logged_permissions', $logged_permissions, $app);
+			}
 		}
 	}
 
@@ -369,17 +406,17 @@ class CoreDinklyUser extends BaseDinklyUser
 	 */
 	public static function getLoggedUsername()
 	{
-		return self::getAuthSessionValue('logged_username');
+		return static::getAuthSessionValue('logged_username');
 	}
 
 	public static function getLoggedGroups()
 	{
-		return self::getAuthSessionValue('logged_groups');
+		return static::getAuthSessionValue('logged_groups');
 	}
 
 	public static function getLoggedId()
 	{
-		return self::getAuthSessionValue('logged_id');
+		return static::getAuthSessionValue('logged_id');
 	}
 
 	public static function formatOffset($offset)
@@ -399,13 +436,25 @@ class CoreDinklyUser extends BaseDinklyUser
 
 	/**
 	 * Clear Dinkly session variables to log out user
-	 *
-	 * 
 	 * 
 	 */
 	public static function logout()
 	{	
 		$_SESSION['dinkly']['auth'][Dinkly::getCurrentAppName()] = null;
+	}
+
+	/**
+	 * Broken out here for easy overriding. Send off to be authenticated
+	 *
+	 * @param int $user_id: userid to set logged in
+	 * @param string $username: username of logged in user
+	 * @param array $groups: groups user has access to
+	 * 
+	 * @return bool: true if correct credentials and logged on, false otherwise
+	 */
+	public static function handleLogin($user_id, $username, $groups)
+	{
+		static::setLoggedIn(true, $user_id, $username, $groups);
 	}
 	
 	/**
@@ -419,7 +468,7 @@ class CoreDinklyUser extends BaseDinklyUser
 	 */
 	public static function authenticate($username, $input_password)
 	{
-		$dbo = self::fetchDB();
+		$dbo = static::fetchDB();
 
 		$sql = "select * from dinkly_user where username=".$dbo->quote($username);
 		$result = $dbo->query($sql)->fetchAll();
@@ -444,7 +493,7 @@ class CoreDinklyUser extends BaseDinklyUser
 				$user->setLoginCount($count);
 				$user->save();
 
-				self::setLoggedIn(true, $result[0]['id'], $result[0]['username'], $user->getGroups());
+				static::handleLogin($result[0]['id'], $result[0]['username'], $user->getGroups());
 
 				return true;
 			}
@@ -453,4 +502,3 @@ class CoreDinklyUser extends BaseDinklyUser
 		return false;
 	}
 }
-
