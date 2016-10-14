@@ -414,6 +414,11 @@ class CoreDinklyUser extends BaseDinklyUser
 		return static::getAuthSessionValue('logged_groups');
 	}
 
+	public static function getLoggedPermissions()
+	{
+		return self::getAuthSessionValue('logged_permissions');
+	}
+
 	public static function getLoggedId()
 	{
 		return static::getAuthSessionValue('logged_id');
