@@ -22,7 +22,7 @@ class BaseAdminController extends Dinkly
 
 		$this->db = DinklyDataConnector::fetchDB();
 
-		if(DinklyUser::isLoggedIn())
+		if(DinklyUser::isLoggedIn() && DinklyUser::isMemberOf('admin'))
 		{
 			$this->logged_user = new DinklyUser();
 			$this->logged_user->init(DinklyUser::getAuthSessionValue('logged_id'));
