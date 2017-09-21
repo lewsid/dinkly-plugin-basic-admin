@@ -461,7 +461,7 @@ class CoreDinklyUser extends BaseDinklyUser
 	{
 		static::setLoggedIn(true, $user_id, $username, $groups);
 	}
-	
+
 	/**
 	 * Verify with database the user credentials are correct and log in if so
 	 * 
@@ -469,7 +469,7 @@ class CoreDinklyUser extends BaseDinklyUser
 	 * @param string $username: input username of user attempting to log in
 	 * @param string $input_password: input password of user attempting to log in
 	 * 
-	 * @return bool: true if correct credentials and logged on, false otherwise
+	 * @return bool: true if correct credentials and logged on, false if not, false if inside brute-force cooldown
 	 */
 	public static function authenticate($username, $input_password)
 	{
@@ -483,24 +483,73 @@ class CoreDinklyUser extends BaseDinklyUser
 		{
 			$user = new DinklyUser();
 			$user->init($result[0]['id']);
+
+			//Check for brute forcing attempt
+			$fail_count = $user->getFailedLoginCount();
+			$last_attempt_time = strtotime($user->getLastFailedLoginAt());
+			$seconds_since_last_attempt = time() - $last_attempt_time;
+
+			//For every 5 failed attempts, we double the cooldown period
+			//Example: 10 failures = 120 seconds, 15 failures = 240 seconds, 20 failures = 480 seconds
+			$cooldown = 60;
+			if($fail_count >= 10)
+			{
+				$multiplier = floor($fail_count / 5);
+				
+				for($i = 1; $i <= $multiplier; $i++)
+				{
+					if($i > 1)
+					{
+						$cooldown = $cooldown * 2;
+					}
+				}
+			}
+
+			//Before we even check the password, make sure we're not in the cooldown window
+			if(($fail_count % 5 == 0) && $seconds_since_last_attempt <= $cooldown)
+			{
+				$user->setIsLocked(true);
+				$user->save();
+
+				return false;
+			}
+			
+			//The user is outside the initial brute-force cool down window or has less than 5 failed attempts
 			$hashed_password = $result[0]['password'];
 
-			if (function_exists('password_verify'))
+			if(function_exists('password_verify'))
+			{
 				$valid_password = password_verify($input_password, $hashed_password) == $hashed_password;
+			}
 			else
+			{
 				$valid_password = crypt($input_password, $hashed_password) == $hashed_password;
+			}
 
 			if($valid_password)
 			{
 				$count = $user->getLoginCount() + 1;
 
+				$user->setFailedLoginCount(0);
 				$user->setLastLoginAt(date('Y-m-d G:i:s'));
 				$user->setLoginCount($count);
+				$user->setIsLocked(false);
 				$user->save();
 
 				static::handleLogin($result[0]['id'], $result[0]['username'], $user->getGroups());
 
 				return true;
+			}
+			else
+			{
+				//User authentication failed
+				$fail_count = $user->getFailedLoginCount();
+				$fail_count++;
+				$user->setFailedLoginCount($fail_count);
+				$user->setLastFailedLoginAt(date('Y-m-d G:i:s'));
+				$user->save();
+
+				return false;
 			}
 		}
 

@@ -15,3 +15,6 @@ registry:
   - time_zone: { type: varchar, length: 50, allow_null: true }
   - auto_login_hash: { type: varchar, length: 255, allow_null: true }
   - auto_login_expire: { type: datetime, allow_null: true }
+  - failed_login_count: { type: int, allow_null: false }
+  - last_failed_login_at: { type: datetime, allow_null: true }
+  - is_locked: { type: boolean, allow_null: false }

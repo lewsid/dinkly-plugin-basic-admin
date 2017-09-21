@@ -16,11 +16,15 @@ class AdminUserController extends BaseAdminUserController
 	/**
 	 * Load default view
 	 *
+	 * This is an example of how to add custom functionality to the load functions in the base controller
+	 *
 	 * @return bool: always returns true on successful construction of view
 	 *
 	 */
-	public function loadDefault()
+	public function loadDefault($parameters)
 	{
+		parent::loadDefault();
+
 		return true;
 	}
 }
