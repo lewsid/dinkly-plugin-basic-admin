@@ -23,13 +23,13 @@ class BaseAdminUserController extends AdminController
 		}
 	}
 
-	public function loadDefault($parameters)
+	public function loadDefault($parameters = array())
 	{
 		$this->users = DinklyUserCollection::getAll();
 		return true;
 	}
 
-	public function loadDelete($parameters)
+	public function loadDelete($parameters = array())
 	{
 		$user = new DinklyUser();
 
@@ -50,7 +50,7 @@ class BaseAdminUserController extends AdminController
 		return false;
 	}
 
-	public function loadNew($parameters)
+	public function loadNew($parameters = array())
 	{
 		$this->user = new DinklyUser($this->db);
 
@@ -65,7 +65,7 @@ class BaseAdminUserController extends AdminController
 
 				DinklyFlash::set('good_user_message', 'User successfully created');
 
-				return $this->loadModule('admin', 'user', 'detail', true, array('id' => $this->user->getId()));
+				return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $this->user->getId()));
 			}
 		}
 
@@ -144,7 +144,7 @@ class BaseAdminUserController extends AdminController
 		}
 	}
 
-	public function loadEdit($parameters)
+	public function loadEdit($parameters = array())
 	{
 		$this->user = new DinklyUser();
 
@@ -183,7 +183,7 @@ class BaseAdminUserController extends AdminController
 					{
 						DinklyFlash::set('good_user_message', 'User successfully updated');
 
-						return $this->loadModule('admin', 'user', 'detail', true, array('id' => $this->user->getId()));
+						return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $this->user->getId()));
 					}
 				}
 			}
@@ -194,7 +194,7 @@ class BaseAdminUserController extends AdminController
 		return false;
 	}
 
-	public function loadAddGroup($parameters)
+	public function loadAddGroup($parameters = array())
 	{
 		if(isset($parameters['id']))
 		{
@@ -206,14 +206,14 @@ class BaseAdminUserController extends AdminController
 
 				DinklyFlash::set('good_user_message', 'User groups updated');
 
-				return $this->loadModule('admin', 'user', 'detail', true, array('id' => $user->getId()));
+				return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $user->getId()));
 			}
 		}
 
 		return false;
 	}
 
-	public function loadRemoveGroup($parameters)
+	public function loadRemoveGroup($parameters = array()) 
 	{
 		if(isset($parameters['id']) && isset($parameters['group_id']))
 		{
@@ -224,13 +224,13 @@ class BaseAdminUserController extends AdminController
 
 			DinklyFlash::set('good_user_message', 'User removed from group');
 
-			return $this->loadModule('admin', 'user', 'detail', true, array('id' => $user->getId()));
+			return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $user->getId()));
 		}
 
 		return false;
 	}
 
-	public function loadDetail($parameters)
+	public function loadDetail($parameters = array())
 	{
 		$this->user = null;
 		$this->available_groups = array();

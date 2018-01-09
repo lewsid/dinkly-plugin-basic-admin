@@ -44,11 +44,11 @@ class BaseAdminLoginController extends AdminController
 		return true;
 	}
 
-	public function loadResetPassword($parameters)
+	public function loadResetPassword($parameters = array())
 	{
 		if(!isset($parameters['k']))
 		{
-			return $this->loadModule('admin', 'home', 'default', true, true);
+			return $this->loadModule('admin', 'home', 'default', true);
 		}
 
 		$user = new DinklyUser($this->db);

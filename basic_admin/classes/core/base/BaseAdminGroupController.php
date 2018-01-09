@@ -227,7 +227,7 @@ class BaseAdminGroupController extends AdminController
 
 				DinklyFlash::set('good_group_message', 'Group successfully created');
 
-				return $this->loadModule('admin', 'group', 'detail', true, array('id' => $this->group->getId()));
+				return $this->loadModule('admin', 'group', 'detail', true, true, array('id' => $this->group->getId()));
 			}
 		}
 
@@ -245,7 +245,7 @@ class BaseAdminGroupController extends AdminController
 
 			DinklyFlash::set('good_group_message', 'Permission removed');
 
-			return $this->loadModule('admin', 'group', 'detail', true, array('id' => $group->getId()));
+			return $this->loadModule('admin', 'group', 'detail', true, true, array('id' => $group->getId()));
 		}
 
 		return false;
@@ -263,7 +263,7 @@ class BaseAdminGroupController extends AdminController
 
 				DinklyFlash::set('good_group_message', 'Permissions updated');
 
-				return $this->loadModule('admin', 'group', 'detail', true, array('id' => $group->getId()));
+				return $this->loadModule('admin', 'group', 'detail', true, true, array('id' => $group->getId()));
 			}
 		}
 
@@ -289,7 +289,7 @@ class BaseAdminGroupController extends AdminController
 
 					DinklyFlash::set('good_group_message', 'Group successfully updated');
 
-					return $this->loadModule('admin', 'group', 'detail', true, array('id' => $this->group->getId()));
+					return $this->loadModule('admin', 'group', 'detail', true, true, array('id' => $this->group->getId()));
 				}
 			}
 

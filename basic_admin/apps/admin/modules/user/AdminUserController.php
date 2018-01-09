@@ -21,7 +21,7 @@ class AdminUserController extends BaseAdminUserController
 	 * @return bool: always returns true on successful construction of view
 	 *
 	 */
-	public function loadDefault($parameters)
+	public function loadDefault($parameters = array())
 	{
 		parent::loadDefault();
 
