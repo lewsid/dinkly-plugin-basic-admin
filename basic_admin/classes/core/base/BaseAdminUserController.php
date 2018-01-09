@@ -65,7 +65,7 @@ class BaseAdminUserController extends AdminController
 
 				DinklyFlash::set('good_user_message', 'User successfully created');
 
-				return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $this->user->getId()));
+				return $this->loadModule('admin', 'user', 'detail', true, array('id' => $this->user->getId()));
 			}
 		}
 
@@ -183,7 +183,7 @@ class BaseAdminUserController extends AdminController
 					{
 						DinklyFlash::set('good_user_message', 'User successfully updated');
 
-						return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $this->user->getId()));
+						return $this->loadModule('admin', 'user', 'detail', true, array('id' => $this->user->getId()));
 					}
 				}
 			}
@@ -206,7 +206,7 @@ class BaseAdminUserController extends AdminController
 
 				DinklyFlash::set('good_user_message', 'User groups updated');
 
-				return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $user->getId()));
+				return $this->loadModule('admin', 'user', 'detail', true, array('id' => $user->getId()));
 			}
 		}
 
@@ -224,7 +224,7 @@ class BaseAdminUserController extends AdminController
 
 			DinklyFlash::set('good_user_message', 'User removed from group');
 
-			return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $user->getId()));
+			return $this->loadModule('admin', 'user', 'detail', true, array('id' => $user->getId()));
 		}
 
 		return false;

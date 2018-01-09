@@ -31,7 +31,7 @@ class BaseAdminController extends Dinkly
 		}
 		else if(Dinkly::getCurrentModule() != 'login')
 		{
-			$this->loadModule('admin', 'login', 'default', true, true);
+			$this->loadModule('admin', 'login', 'default', true);
 		}
 
 		return true;

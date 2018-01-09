@@ -1,4 +1,4 @@
-Dinkly Basic Admin Plugin v1.04
+Dinkly Basic Admin Plugin v1.05
 ===============================
 
 A basic admin featuring user and group management, customizable profiles, and authentication
