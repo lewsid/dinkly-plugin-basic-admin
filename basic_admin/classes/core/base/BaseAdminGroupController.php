@@ -24,7 +24,7 @@ class BaseAdminGroupController extends AdminController
 		}
 	}
 
-	public function loadDeletePermission($parameters)
+	public function loadDeletePermission($parameters = array())
 	{
 		if(isset($_POST['permission_id']))
 		{
@@ -41,7 +41,7 @@ class BaseAdminGroupController extends AdminController
 		return false;
 	}
 
-	public function loadCreatePermission($parameters)
+	public function loadCreatePermission($parameters = array())
 	{
 		$errors = array();
 
@@ -90,7 +90,7 @@ class BaseAdminGroupController extends AdminController
 		return false;
 	}
 
-	public function loadDefault($parameters)
+	public function loadDefault($parameters = array())
 	{
 		$this->groups = DinklyGroupCollection::getAll();
 		$this->all_permissions = DinklyPermissionCollection::getAll();
@@ -98,14 +98,14 @@ class BaseAdminGroupController extends AdminController
 		return true;
 	}
 
-	public function loadPermissionTable($parameters)
+	public function loadPermissionTable($parameters = array())
 	{
 		$this->all_permissions = DinklyPermissionCollection::getAll();
 
 		return false;
 	}
 
-	public function loadDetail($parameters)
+	public function loadDetail($parameters = array())
 	{
 		$this->group = null;
 		$this->available_permissions = array();
@@ -191,7 +191,7 @@ class BaseAdminGroupController extends AdminController
 		}
 	}
 
-	public function loadDelete($parameters)
+	public function loadDelete($parameters = array())
 	{
 		$group = new DinklyGroup();
 
@@ -212,7 +212,7 @@ class BaseAdminGroupController extends AdminController
 		return false;
 	}
 
-	public function loadNew($parameters)
+	public function loadNew($parameters = array())
 	{
 		$this->group = new DinklyGroup();
 
@@ -234,7 +234,7 @@ class BaseAdminGroupController extends AdminController
 		return true;
 	}
 
-	public function loadRemovePermission($parameters)
+	public function loadRemovePermission($parameters = array())
 	{
 		if(isset($parameters['id']) && isset($parameters['permission_id']))
 		{
@@ -251,7 +251,7 @@ class BaseAdminGroupController extends AdminController
 		return false;
 	}
 
-	public function loadAddPermission($parameters)
+	public function loadAddPermission($parameters = array())
 	{
 		if(isset($parameters['id']))
 		{
@@ -270,7 +270,7 @@ class BaseAdminGroupController extends AdminController
 		return false;
 	}
 
-	public function loadEdit($parameters)
+	public function loadEdit($parameters = array())
 	{
 		$this->group = new DinklyGroup();
 
