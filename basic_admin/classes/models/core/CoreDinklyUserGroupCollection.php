@@ -26,7 +26,7 @@ class CoreDinklyUserGroupCollection extends DinklyDataCollection
 				$group_ids[] = $group_join->getDinklyGroupId();
 			}
 
-			$groups = DinklyGroupCollection::getByArrayOfIds($group_ids, $db);
+			$groups = DinklyGroupCollection::getByArrayOfIds($db, $group_ids);
 
 			if($groups != array())
 			{
@@ -54,7 +54,7 @@ class CoreDinklyUserGroupCollection extends DinklyDataCollection
 				$user_ids[] = $group_join->getDinklyUserId();
 			}
 
-			$users = DinklyUserCollection::getByArrayOfIds($user_ids, $db);
+			$users = DinklyUserCollection::getByArrayOfIds($db, $user_ids);
 
 			if($users != array())
 			{

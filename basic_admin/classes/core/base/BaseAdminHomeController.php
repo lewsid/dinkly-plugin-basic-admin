@@ -21,6 +21,10 @@ class BaseAdminHomeController extends AdminController
 	 */
 	public function loadDefault($parameters = array())
 	{
+		$this->total_users = DinklyUserCollection::getTotalUserCount($this->db);
+		$this->locked_accounts = DinklyUserCollection::getTotalLockedCount($this->db);
+		$this->logins_today = DinklyUserCollection::getTodayLoginCount($this->db);
+
 		return true;
 	}
 }

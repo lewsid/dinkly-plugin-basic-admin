@@ -1,70 +1,24 @@
-<div class="container primary-container">
-  <?php if(DinklyFlash::exists('good_user_message')): ?>
-    <div class="alert alert-success">
-    <?php echo DinklyFlash::get('good_user_message'); ?>
-    <button type="button" class="close message-close" aria-hidden="true">&times;</button>
-  </div>
-  <?php endif; ?>
-  <?php if(DinklyFlash::exists('error')): ?>
-  <div class="alert alert-danger">
-  <?php echo DinklyFlash::get('error'); ?>
-  <button type="button" class="close message-close" aria-hidden="true">&times;</button>
-  </div>
-  <?php endif; ?>
+<div class="container mt-4">
+	<?php include($_SERVER['APPLICATION_ROOT'] . 'plugins/basic_admin/apps/admin/layout/messaging.php'); ?>
 
-  <div>
-    <h2>
-        Dashboard
-    </h2>
-    <p>Hello <?php echo ucfirst(strtolower($logged_user->getFirstName())); ?>!</p>
-    <hr>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="jumbotron dashboard-jumbotron text-center">
-              <i class="fa fa-user fa-5x"></i>
-              <h4><a class="jumbo-link" href="/admin/user">Users</a></h4>
-              <hr>
-              <p>Manage Users</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="jumbotron dashboard-jumbotron text-center">
-              <i class="fa fa-group fa-5x"></i>
-              <h4><a class="jumbo-link" href="/admin/group">Groups</a></h4>
-              <hr>
-              <p>Manage Groups</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="jumbotron dashboard-jumbotron text-center">
-              <i class="fa fa-gears fa-5x"></i>
-              <h4><a class="jumbo-link" href="/admin/profile">Settings</a></h4>
-              <hr>
-              <p>Edit Profile and Settings</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<h2>Admin Dashboard</h2>
+	<hr>
+	<div class="row">
+		<div class="col-md-4">
+			<ul class="list-group">
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					Total Users
+					<span class="badge badge-dark badge-pill"><?php echo $total_users; ?></span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					Locked Accounts
+					<span class="badge badge-dark badge-pill"><?php echo $locked_accounts; ?></span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					Logins Today
+					<span class="badge badge-dark badge-pill"><?php echo $logins_today; ?></span>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('.dashboard-jumbotron').hover(function() {
-     $(this).css('background','#C0C0C0');
-     $(this).css('border-color','#C0C0C0');
-  },
-  function(){
-    $(this).css('background','#f4f4f4');
-    $(this).css('border-color','#f4f4f4');
-  });
-
-  $('.dashboard-jumbotron').on('click', function() {
-    var where = $(this).find('.jumbo-link').attr('href');
-    window.location = where;
-  });
-});
-</script>

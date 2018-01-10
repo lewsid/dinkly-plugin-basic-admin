@@ -8,5 +8,8 @@
  */
 class AdminLoginController extends BaseAdminLoginController 
 {
-
+	public function __construct()
+	{
+		parent::__construct();
+	}
 }

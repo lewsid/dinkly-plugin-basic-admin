@@ -1,11 +1,11 @@
-Dinkly Basic Admin Plugin v1.05
+Dinkly Basic Admin Plugin v2.00
 ===============================
 
 A basic admin featuring user and group management, customizable profiles, and authentication
 
 
-Installation
-------------
+Installation: Method 1 - Install as plugin
+------------------------------------------
 
   1. Move the `basic_admin` folder into your dinkly project's `plugins` folder.
 
@@ -39,6 +39,42 @@ Installation
   5. Build the models and load tables into the database: `php tools/gen_models.php -s dinkly -p basic_admin -i`
 
   6. Load basic data fixtures: `php tools/load_fixtures.php -s dinkly -p basic_admin`
+
+
+Installation: Method 2 - Use as your app's core admin functionality
+-------------------------------------------------------------------
+
+  1. Drop the `admin` folder into your project's `apps` folder.
+
+  2. Copy/merge the contents of the `config` folder into your project's `config` folder.
+
+  3. Copy/merge the contents of `basic_admin/web` into your project's `web` folder.
+
+  4. Add the following lines under the `apps` section of your `config/config.yml` file:
+
+  ```yaml
+  admin:
+      base_href: /admin
+      default_module: home
+      enabled: true
+      app_name: Dinkly Admin
+      app_description: Basic Admin
+      copyright: Dinkly
+      current_app_url: http://localhost:8888  #Used for the password reset emails
+  ```
+
+  5. Add database credentials under the `databases` section of your `config/config.yml` file if none are present:
+
+  ```yaml
+  dinkly:
+            host: localhost
+            user: root
+            pass: root
+            name: <your app's database name>
+
+  6. Build the models and load tables into the database: `php tools/gen_models.php -s dinkly -i`
+
+  7. Load basic data fixtures: `php tools/load_fixtures.php -s dinkly`
 
 
 License

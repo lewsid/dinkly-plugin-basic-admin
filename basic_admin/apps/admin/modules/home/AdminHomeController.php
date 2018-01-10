@@ -8,5 +8,8 @@
  */
 class AdminHomeController extends BaseAdminHomeController 
 {
-
+	public function __construct()
+	{
+		parent::__construct();
+	}
 }

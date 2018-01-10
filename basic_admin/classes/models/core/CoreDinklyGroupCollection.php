@@ -9,7 +9,7 @@
  */
 class CoreDinklyGroupCollection extends DinklyDataCollection
 {
-	public static function getByArrayOfIds($group_ids, $db = null)
+	public static function getByArrayOfIds($db = null, $group_ids)
 	{
 		$peer_object = new DinklyGroup();
 
@@ -39,7 +39,7 @@ class CoreDinklyGroupCollection extends DinklyDataCollection
 		return self::getCollection($peer_object, $query, $db);
 	}
 
-	public static function isUniqueName($name, $db = null)
+	public static function isUniqueName($db = null, $name)
 	{
 		$user = new DinklyGroup();
 
@@ -56,7 +56,7 @@ class CoreDinklyGroupCollection extends DinklyDataCollection
 		else { return true; }
 	}
 
-	public static function isUniqueAbbreviation($abbr, $db = null)
+	public static function isUniqueAbbreviation($db = null, $abbr)
 	{
 		$user = new DinklyGroup();
 

@@ -60,7 +60,7 @@ class BaseAdminGroupController extends AdminController
 			}
 
 			//Check the name for uniqueness
-			if(!DinklyPermissionCollection::isUniqueName($_POST['permission_name']))
+			if(!DinklyPermissionCollection::isUniqueName($this->db, $_POST['permission_name']))
 			{
 				$errors[] = "Name already in use, please try another.";
 			}
@@ -153,13 +153,13 @@ class BaseAdminGroupController extends AdminController
 			}
 
 			//Check the name for uniqueness
-			if(!DinklyGroupCollection::isUniqueName($post_array['name']) && $post_array['name'] != $this->group->getName())
+			if(!DinklyGroupCollection::isUniqueName($this->db, $post_array['name']) && $post_array['name'] != $this->group->getName())
 			{
 				$this->errors[] = "Name already in use, please try another.";
 			}
 
 			//Check the abbreviation for uniqueness
-			if(!DinklyGroupCollection::isUniqueAbbreviation($post_array['abbreviation']) 
+			if(!DinklyGroupCollection::isUniqueAbbreviation($this->db, $post_array['abbreviation']) 
 				&& $post_array['abbreviation'] != $this->group->getAbbreviation())
 			{
 				$this->errors[] = "Abbreviation already in use, please try another.";
@@ -189,6 +189,11 @@ class BaseAdminGroupController extends AdminController
 			$this->group->setAbbreviation($post_array['abbreviation']);
 			$this->group->setDescription($post_array['description']);
 		}
+
+		if($this->errors != array())
+		{
+			DinklyFlash::set('errors', $this->errors);
+		}
 	}
 
 	public function loadDelete($parameters = array())
@@ -203,7 +208,7 @@ class BaseAdminGroupController extends AdminController
 			{
 				$group->delete();
 
-				DinklyFlash::set('warning_group_message', 'Group successfully deleted');
+				DinklyFlash::set('good_user_message', 'Group successfully deleted');
 
 				return $this->loadModule('admin', 'group', 'default', true);
 			}
@@ -225,9 +230,9 @@ class BaseAdminGroupController extends AdminController
 			{
 				$this->group->save();
 
-				DinklyFlash::set('good_group_message', 'Group successfully created');
+				DinklyFlash::set('good_user_message', 'Group successfully created');
 
-				return $this->loadModule('admin', 'group', 'detail', true, true, array('id' => $this->group->getId()));
+				return $this->loadModule('admin', 'group', 'detail', true, array('id' => $this->group->getId()));
 			}
 		}
 
@@ -243,9 +248,9 @@ class BaseAdminGroupController extends AdminController
 
 			$group->removePermission($parameters['permission_id']);
 
-			DinklyFlash::set('good_group_message', 'Permission removed');
+			DinklyFlash::set('good_user_message', 'Permission removed');
 
-			return $this->loadModule('admin', 'group', 'detail', true, true, array('id' => $group->getId()));
+			return $this->loadModule('admin', 'group', 'detail', true, array('id' => $group->getId()));
 		}
 
 		return false;
@@ -261,9 +266,9 @@ class BaseAdminGroupController extends AdminController
 				$group->init($parameters['id']);
 				$group->addPermissions($_POST['permission']);
 
-				DinklyFlash::set('good_group_message', 'Permissions updated');
+				DinklyFlash::set('good_user_message', 'Permissions updated');
 
-				return $this->loadModule('admin', 'group', 'detail', true, true, array('id' => $group->getId()));
+				return $this->loadModule('admin', 'group', 'detail', true, array('id' => $group->getId()));
 			}
 		}
 
@@ -287,9 +292,9 @@ class BaseAdminGroupController extends AdminController
 				{
 					$this->group->save();
 
-					DinklyFlash::set('good_group_message', 'Group successfully updated');
+					DinklyFlash::set('good_user_message', 'Group successfully updated');
 
-					return $this->loadModule('admin', 'group', 'detail', true, true, array('id' => $this->group->getId()));
+					return $this->loadModule('admin', 'group', 'detail', true, array('id' => $this->group->getId()));
 				}
 			}
 

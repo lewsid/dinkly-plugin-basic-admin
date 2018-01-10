@@ -10,5 +10,8 @@
 
 class AdminProfileController extends BaseAdminProfileController
 {
-	
+	public function __construct()
+	{
+		parent::__construct();
+	}
 }

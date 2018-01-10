@@ -9,7 +9,7 @@
  */
 class CoreDinklyUserCollection extends DinklyDataCollection
 {
-	public static function isUniqueUsername($username, $db = null)
+	public static function isUniqueUsername($db = null, $username)
 	{
 		$user = new DinklyUser();
 
@@ -26,7 +26,7 @@ class CoreDinklyUserCollection extends DinklyDataCollection
 		else { return true; }
 	}
 
-	public static function getByArrayOfIds($user_ids, $db = null)
+	public static function getByArrayOfIds($db = null, $user_ids)
 	{
 		$peer_object = new DinklyUser();
 
@@ -44,5 +44,37 @@ class CoreDinklyUserCollection extends DinklyDataCollection
 
 		return self::getCollection($peer_object, $query, $db);
 	}
-}
 
+	public static function getTotalUserCount($db = null)
+	{
+		if($db == null) { $db = self::fetchDB(); }
+
+		$query = "select count(*) as num from dinkly_user";
+
+		$results = $db->query($query)->fetchAll();
+
+		return $results[0]['num'];
+	}
+
+	public static function getTotalLockedCount($db = null)
+	{
+		if($db == null) { $db = self::fetchDB(); }
+
+		$query = "select count(*) as num from dinkly_user where is_locked = 1";
+
+		$results = $db->query($query)->fetchAll();
+
+		return $results[0]['num'];
+	}
+
+	public static function getTodayLoginCount($db = null)
+	{
+		if($db == null) { $db = self::fetchDB(); }
+
+		$query = "select count(*) as num from dinkly_user where last_login_at > '" . date('Y-m-d') . "'";
+
+		$results = $db->query($query)->fetchAll();
+
+		return $results[0]['num'];
+	}
+}

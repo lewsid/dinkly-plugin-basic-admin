@@ -9,7 +9,7 @@
  */
 class CoreDinklyPermissionCollection extends DinklyDataCollection
 {
-	public static function getByArrayOfIds($perm_ids, $db = null)
+	public static function getByArrayOfIds($db = null, $perm_ids)
 	{
 		$peer_object = new DinklyPermission();
 
@@ -39,7 +39,7 @@ class CoreDinklyPermissionCollection extends DinklyDataCollection
 		return self::getCollection($peer_object, $query, $db);
 	}
 
-	public static function isUniqueName($name, $db = null)
+	public static function isUniqueName($db = null, $name)
 	{
 		$user = new DinklyPermission();
 

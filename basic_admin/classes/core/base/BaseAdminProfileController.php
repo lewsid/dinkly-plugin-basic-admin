@@ -42,7 +42,7 @@ class BaseAdminProfileController extends AdminController
 		else if($post_array['email'] != $this->user->getUsername())
 		{
 			//Check the username/email for uniqueness
-			if(!DinklyUserCollection::isUniqueUsername($post_array['email']))
+			if(!DinklyUserCollection::isUniqueUsername($this->db, $post_array['email']))
 			{
 				$this->errors[] = "Email address already in use, please try another.";
 			}

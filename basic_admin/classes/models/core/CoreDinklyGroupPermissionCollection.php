@@ -26,7 +26,7 @@ class CoreDinklyGroupPermissionCollection extends DinklyDataCollection
 				$perm_ids[] = $perm_join->getDinklyPermissionId();
 			}
 
-			$perms = DinklyPermissionCollection::getByArrayOfIds($perm_ids, $db);
+			$perms = DinklyPermissionCollection::getByArrayOfIds($db, $perm_ids);
 
 			if($perms != array())
 			{

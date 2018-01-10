@@ -9,5 +9,8 @@
 
 class AdminGroupController extends BaseAdminGroupController
 {
-
+	public function __construct()
+	{
+		parent::__construct();
+	}
 }

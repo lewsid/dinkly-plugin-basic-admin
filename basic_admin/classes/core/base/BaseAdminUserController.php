@@ -41,7 +41,7 @@ class BaseAdminUserController extends AdminController
 			{
 				$user->delete();
 
-				DinklyFlash::set('warning_user_message', 'User successfully deleted');
+				DinklyFlash::set('good_user_message', 'User successfully deleted');
 
 				return $this->loadModule('admin', 'user', 'default', true);
 			}
@@ -65,7 +65,7 @@ class BaseAdminUserController extends AdminController
 
 				DinklyFlash::set('good_user_message', 'User successfully created');
 
-				return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $this->user->getId()));
+				return $this->loadModule('admin', 'user', 'detail', true, array('id' => $this->user->getId()));
 			}
 		}
 
@@ -78,7 +78,7 @@ class BaseAdminUserController extends AdminController
 		if($post_array['username'] != $this->user->getUsername())
 		{
 			//Check the username/email for uniqueness
-			if(!DinklyUserCollection::isUniqueUsername($post_array['username']))
+			if(!DinklyUserCollection::isUniqueUsername($this->db, $post_array['username']))
 			{
 				$this->errors[] = "Email address already in use, please try another.";
 			}
@@ -142,6 +142,11 @@ class BaseAdminUserController extends AdminController
 		{
 			$this->user->setTitle($post_array['title']);
 		}
+
+		if($this->errors != array())
+		{
+			DinklyFlash::set('errors', $this->errors);
+		}
 	}
 
 	public function loadEdit($parameters = array())
@@ -183,7 +188,7 @@ class BaseAdminUserController extends AdminController
 					{
 						DinklyFlash::set('good_user_message', 'User successfully updated');
 
-						return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $this->user->getId()));
+						return $this->loadModule('admin', 'user', 'detail', true, array('id' => $this->user->getId()));
 					}
 				}
 			}
@@ -206,7 +211,7 @@ class BaseAdminUserController extends AdminController
 
 				DinklyFlash::set('good_user_message', 'User groups updated');
 
-				return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $user->getId()));
+				return $this->loadModule('admin', 'user', 'detail', true, array('id' => $user->getId()));
 			}
 		}
 
@@ -224,7 +229,7 @@ class BaseAdminUserController extends AdminController
 
 			DinklyFlash::set('good_user_message', 'User removed from group');
 
-			return $this->loadModule('admin', 'user', 'detail', true, true, array('id' => $user->getId()));
+			return $this->loadModule('admin', 'user', 'detail', true, array('id' => $user->getId()));
 		}
 
 		return false;
