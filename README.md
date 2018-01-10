@@ -1,7 +1,7 @@
 Dinkly Basic Admin Plugin v2.00
 ===============================
 
-A basic admin featuring user and group management, customizable profiles, and authentication
+A basic admin featuring user and group management, customizable profiles, and authentication for use with the Dinkly framework.
 
 Features:
 
@@ -9,6 +9,7 @@ Features:
   - Built-in brute-force login protection
   - Unix-style Groups and Permissions structure
   - Password reset functionality
+  - Customizable timezones and date formatting
   - Responsive styling
   - Includes Bootstrap 4
 
