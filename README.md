@@ -71,6 +71,7 @@ Installation: Method 2 - Use as your app's core admin functionality
             user: root
             pass: root
             name: <your app's database name>
+  ```
 
   6. Build the models and load tables into the database: `php tools/gen_models.php -s dinkly -i`
 
