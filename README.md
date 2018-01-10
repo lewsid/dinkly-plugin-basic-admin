@@ -89,6 +89,9 @@ Installation: Method 2 - Use as your app's core admin functionality
 
   8. Load basic data fixtures: `php tools/load_fixtures.php -s dinkly`
 
+  9. Search for `<?php include($_SERVER['APPLICATION_ROOT'] . 'plugins/basic_admin/apps/admin/layout/messaging.php'); ?>` and replace with `<?php include($_SERVER['APPLICATION_ROOT'] . 'apps/admin/layout/messaging.php'); ?>`
+
+
 
 License
 -------
