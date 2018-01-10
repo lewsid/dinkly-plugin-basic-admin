@@ -11,10 +11,12 @@
 	</div>
 <?php endif; ?>
 <?php if(DinklyFlash::exists('errors')): ?>
-	<div class="alert alert-danger">
-		<?php foreach(DinklyFlash::get('errors') as $error): ?>
-			<?php echo $error; ?>
-		<?php endforeach; ?>
-		<button type="button" class="close message-close" aria-hidden="true">&times;</button>
-	</div>
+    <div class="alert alert-danger">
+        <ul>
+            <?php foreach(DinklyFlash::get('errors') as $error): ?>
+                <li><?php echo $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+        <button type="button" class="close message-close" aria-hidden="true">&times;</button>
+    </div>
 <?php endif; ?>
