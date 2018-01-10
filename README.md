@@ -6,15 +6,10 @@ A basic admin featuring user and group management, customizable profiles, and au
 Features:
 
   - Basic user authentication
-
   - Built-in brute-force login protection
-
   - Unix-style Groups and Permissions structure
-
   - Password reset functionality
-
   - Responsive styling
-
   - Includes Bootstrap 4
 
 
