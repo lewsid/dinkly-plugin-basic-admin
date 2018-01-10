@@ -58,9 +58,11 @@ Installation: Method 2 - Use as your app's core admin functionality
 
   2. Copy/merge the contents of the `config` folder into your project's `config` folder.
 
-  3. Copy/merge the contents of `basic_admin/web` into your project's `web` folder.
+  3. Copy/merge the contents of the `classes` folder into your project's `classes` folder.
 
-  4. Add the following lines under the `apps` section of your `config/config.yml` file:
+  4. Copy/merge the contents of `basic_admin/web` into your project's `web` folder.
+
+  5. Add the following lines under the `apps` section of your `config/config.yml` file:
 
   ```yaml
   admin:
@@ -73,7 +75,7 @@ Installation: Method 2 - Use as your app's core admin functionality
       current_app_url: http://localhost:8888  #Used for the password reset emails
   ```
 
-  5. Add database credentials under the `databases` section of your `config/config.yml` file if none are present:
+  6. Add database credentials under the `databases` section of your `config/config.yml` file if none are present:
 
   ```yaml
   dinkly:
@@ -83,9 +85,9 @@ Installation: Method 2 - Use as your app's core admin functionality
             name: <your app's database name>
   ```
 
-  6. Build the models and load tables into the database: `php tools/gen_models.php -s dinkly -i`
+  7. Build the models and load tables into the database: `php tools/gen_models.php -s dinkly -i`
 
-  7. Load basic data fixtures: `php tools/load_fixtures.php -s dinkly`
+  8. Load basic data fixtures: `php tools/load_fixtures.php -s dinkly`
 
 
 License
