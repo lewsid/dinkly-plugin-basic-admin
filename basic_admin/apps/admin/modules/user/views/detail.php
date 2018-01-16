@@ -17,11 +17,11 @@
 				<legend>User Info <button style="" type="button" class="btn btn-xs btn-link btn-edit-user">Edit</button></legend>
 				<div class="form-group">
 					<label for="created">Created</label>
-					<input value="<?php echo $user->getCreatedAt($date_format); ?>" type="text" disabled="disabled" class="form-control" id="created" name="created">
+					<input value="<?php echo $user->getCreatedAt(); ?>" type="text" disabled="disabled" class="form-control" id="created" name="created">
 				</div>	
 				<div class="form-group">
 					<label for="updated">Updated</label>
-					<input value="<?php echo $user->getUpdatedAt($date_format); ?>" type="text" disabled="disabled" class="form-control" id="updated" name="updated">
+					<input value="<?php echo $user->getUpdatedAt(); ?>" type="text" disabled="disabled" class="form-control" id="updated" name="updated">
 				</div>
 				<hr>
 				<div class="form-group">
