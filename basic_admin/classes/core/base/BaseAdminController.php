@@ -24,9 +24,9 @@ class BaseAdminController extends Dinkly
 
 		if(DinklyUser::isLoggedIn() && DinklyUser::isMemberOf('admin'))
 		{
-			$this->logged_user = new DinklyUser();
+			$this->logged_user = new DinklyUser($this->db);
 			$this->logged_user->init(DinklyUser::getAuthSessionValue('logged_id'));
-			$this->date_format = $this->date_format = $this->logged_user->getDateFormat() . ' ' . $this->logged_user->getTimeFormat();
+			$this->date_format = $this->logged_user->getDateFormat() . ' ' . $this->logged_user->getTimeFormat();
 			return false;
 		}
 		else if(Dinkly::getCurrentModule() != 'login')
